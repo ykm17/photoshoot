@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "289862505274",
+    "firebase_url": "https://photoshoot-70e9b.firebaseio.com",
+    "project_id": "photoshoot-70e9b",
+    "storage_bucket": "photoshoot-70e9b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289862505274:android:0714daf66d1cdeb0",
+        "android_client_info": {
+          "package_name": "com.project.photoshoot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "289862505274-bp12ucl5adea267qaqjvs8oq9bds2aaa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.photoshoot",
+            "certificate_hash": "409e61a64daa03720a5f6e246e1b6ee8c47b6c73"
+          }
+        },
+        {
+          "client_id": "289862505274-plihtgs6dlp7m43472mnr3ohmn4pfpgs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_Um4ayNDW1S7R-rmcmsp53CenQtvAkZg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "289862505274-plihtgs6dlp7m43472mnr3ohmn4pfpgs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
