@@ -1,4 +1,4 @@
-package com.project.photoshoot;
+package com.project.photoshoot.basic;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -6,8 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,6 +15,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.project.photoshoot.R;
+import com.project.photoshoot.main.AdminHomeActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -24,6 +24,12 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEmailEdittext, mPasswordEdittext;
     private Button mLoginButton, mSignupButton, mResetPasswordButton;
     private FirebaseAuth mAuth;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,9 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(LoginActivity.this, AdminHomeActivity.class));
+        }
 
         mEmailEdittext = findViewById(R.id.email_edittext);
         mPasswordEdittext = findViewById(R.id.password_edittext);
@@ -71,26 +80,32 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 
     private void login(String email, String password) {
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+        if (email.trim().isEmpty() || password.trim().isEmpty()) {
+            Toast.makeText(this, "Enter proper details !", Toast.LENGTH_SHORT).show();
+        } else {
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        if (task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
+                            if (task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(LoginActivity.this, AdminHomeActivity.class));
+                            } else {
+                                Log.e("ERROR", task.getException().toString());
+                                Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
 
-                        } else {
-                            Log.e("ERROR", task.getException().toString());
-                            Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-
+                            }
                         }
-                    }
-                });
+                    });
 
+        }
     }
 
 }

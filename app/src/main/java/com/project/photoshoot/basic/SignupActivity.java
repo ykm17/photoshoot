@@ -1,4 +1,4 @@
-package com.project.photoshoot;
+package com.project.photoshoot.basic;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -16,6 +16,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.project.photoshoot.R;
 
 public class SignupActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.project.photoshoot;
+package com.project.photoshoot.basic;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.project.photoshoot.R;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 
