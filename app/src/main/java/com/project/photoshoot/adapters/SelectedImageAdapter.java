@@ -1,4 +1,4 @@
-package com.project.photoshoot.main;
+package com.project.photoshoot.adapters;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -17,7 +17,7 @@ import java.util.List;
 
 import static android.support.constraint.Constraints.TAG;
 
-class SelectedImageAdapter extends RecyclerView.Adapter<SelectedImageAdapter.SelectedImageViewHolder> {
+public class SelectedImageAdapter extends RecyclerView.Adapter<SelectedImageAdapter.SelectedImageViewHolder> {
 
     private List<Uri> mUriList = new ArrayList<>() ;
 
@@ -35,8 +35,10 @@ class SelectedImageAdapter extends RecyclerView.Adapter<SelectedImageAdapter.Sel
 
     @Override
     public void onBindViewHolder(@NonNull SelectedImageViewHolder selectedImageViewHolder, int i) {
-        Log.d(TAG, "onBindViewHolder: $$"+i);
-        Picasso.get().load(mUriList.get(i)).fit().centerCrop().into(selectedImageViewHolder.mSelectedImageView);
+        //Log.d(TAG, "onBindViewHolder: $$"+i);
+        Picasso.get().load(mUriList.get(i))
+                .placeholder(R.drawable.placeholder_white)
+                .fit().centerCrop().into(selectedImageViewHolder.mSelectedImageView);
     }
 
     @Override

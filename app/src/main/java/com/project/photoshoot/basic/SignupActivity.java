@@ -1,5 +1,6 @@
 package com.project.photoshoot.basic;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -62,15 +63,24 @@ public class SignupActivity extends AppCompatActivity {
     private void signup(String email, String password) {
 
         if (!email.equals("") && !password.equals("")) {
+
+            final ProgressDialog progressDialog = ProgressDialog.show(SignupActivity.this, "Please wait...", "Proccessing...", true);
+
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressDialog.dismiss();
                             if (task.isSuccessful()) {
+
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "createUserWithEmail:success");
-                                Toast.makeText(SignupActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this, "Signup Successful !", Toast.LENGTH_SHORT).show();
                                 FirebaseUser user = mAuth.getCurrentUser();
+                                Intent i = new Intent(SignupActivity.this, LoginActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                                finish();
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -79,8 +89,13 @@ public class SignupActivity extends AppCompatActivity {
                             }
                         }
                     });
-        }else{
+        } else {
             Toast.makeText(this, "Input wrong", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

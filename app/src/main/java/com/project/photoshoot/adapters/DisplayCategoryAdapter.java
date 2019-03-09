@@ -1,6 +1,6 @@
-package com.project.photoshoot.main;
+package com.project.photoshoot.adapters;
 
-import android.media.Image;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,15 +11,18 @@ import android.widget.TextView;
 
 import com.project.photoshoot.ImageFile;
 import com.project.photoshoot.R;
+import com.project.photoshoot.main.AdminHomeActivity;
+import com.project.photoshoot.main.DisplayCategoryImagesActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-class DisplayCategoryAdapter extends RecyclerView.Adapter<DisplayCategoryAdapter.DisplayCategoryViewHolder> {
+public class DisplayCategoryAdapter extends RecyclerView.Adapter<DisplayCategoryAdapter.DisplayCategoryViewHolder> {
 
     List<ImageFile> imageFileList;
+
     public DisplayCategoryAdapter(List<ImageFile> imageFileList) {
-            this.imageFileList = imageFileList;
+        this.imageFileList = imageFileList;
     }
 
     @NonNull
@@ -34,6 +37,7 @@ class DisplayCategoryAdapter extends RecyclerView.Adapter<DisplayCategoryAdapter
     public void onBindViewHolder(@NonNull DisplayCategoryViewHolder displayCategoryViewHolder, int i) {
         displayCategoryViewHolder.mCategoryName.setText(imageFileList.get(i).getCategoryname());
         Picasso.get().load(imageFileList.get(i).getDisplayImage())
+                .placeholder(R.drawable.placeholder_white)
                 .fit().centerCrop().into(displayCategoryViewHolder.mDisplayImage);
     }
 
@@ -42,7 +46,7 @@ class DisplayCategoryAdapter extends RecyclerView.Adapter<DisplayCategoryAdapter
         return imageFileList.size();
     }
 
-    class DisplayCategoryViewHolder extends RecyclerView.ViewHolder{
+    class DisplayCategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView mCategoryName;
         ImageView mDisplayImage;
@@ -51,6 +55,15 @@ class DisplayCategoryAdapter extends RecyclerView.Adapter<DisplayCategoryAdapter
             super(itemView);
             mCategoryName = itemView.findViewById(R.id.categoryname);
             mDisplayImage = itemView.findViewById(R.id.displayimage);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(itemView.getContext(), DisplayCategoryImagesActivity.class);
+            intent.putExtra("category_name", String.valueOf(imageFileList.get(getAdapterPosition()).getCategoryname()));
+            itemView.getContext().startActivity(intent);
+            ((AdminHomeActivity)itemView.getContext()).finish();
         }
     }
 }

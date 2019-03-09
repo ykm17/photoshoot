@@ -1,5 +1,6 @@
 package com.project.photoshoot.basic;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() != null) {
             startActivity(new Intent(LoginActivity.this, AdminHomeActivity.class));
+            finish();
         }
 
         mEmailEdittext = findViewById(R.id.email_edittext);
@@ -85,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login(String email, String password) {
+        final ProgressDialog progressDialog = ProgressDialog.show(LoginActivity.this, "Please wait...", "Proccessing...", true);
 
         if (email.trim().isEmpty() || password.trim().isEmpty()) {
             Toast.makeText(this, "Enter proper details !", Toast.LENGTH_SHORT).show();
@@ -93,10 +96,12 @@ public class LoginActivity extends AppCompatActivity {
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressDialog.dismiss();
 
                             if (task.isSuccessful()) {
                                 Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(LoginActivity.this, AdminHomeActivity.class));
+                                finish();
                             } else {
                                 Log.e("ERROR", task.getException().toString());
                                 Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();

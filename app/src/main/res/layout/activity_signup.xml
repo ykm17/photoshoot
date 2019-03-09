@@ -4,15 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue1"
+    android:background="@color/grey1"
     android:orientation="vertical"
     tools:context=".basic.SignupActivity">
 
+    <ImageView
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_window" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Happy Shoots..."
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:fontFamily="@font/cursue"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5"
+        android:layout_height="400dp"
         android:background="@color/white"
         android:gravity="center"
         android:orientation="vertical">
@@ -24,7 +37,7 @@
             android:fontFamily="@font/cursue"
             android:gravity="center"
             android:text="Signup"
-            android:textSize="50sp" />
+            android:textSize="45sp" />
 
         <EditText
             android:id="@+id/email_edittext"
@@ -32,7 +45,11 @@
             android:layout_height="wrap_content"
             android:hint="Email"
             android:padding="10dp"
-            android:textSize="26sp" />
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textSize="22sp"
+            android:maxLines="1"
+            android:inputType="textEmailAddress"/>
 
         <EditText
             android:id="@+id/password_edittext"
@@ -41,16 +58,21 @@
             android:hint="Password"
             android:inputType="textPassword"
             android:padding="10dp"
-            android:textSize="26sp" />
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/signup_button"
-            style="@style/raisedbutton"
+            android:background="@drawable/curvedbackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Proceed"
             android:textAllCaps="false"
-            android:textSize="18sp" />
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:layout_marginTop="5dp"/>
 
         <Button
             android:id="@+id/login_button"
@@ -64,10 +86,5 @@
 
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.5"></LinearLayout>
 
 </LinearLayout>
