@@ -1,4 +1,4 @@
-package com.project.photoshoot.main;
+package com.project.photoshoot.main.admin;
 
 import android.app.Activity;
 import android.content.ClipData;
@@ -7,16 +7,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -42,22 +34,31 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.project.photoshoot.ImageFile;
 import com.project.photoshoot.R;
 import com.project.photoshoot.SpacesItemDecoration;
 import com.project.photoshoot.adapters.DisplayCategoryAdapter;
 import com.project.photoshoot.adapters.SelectedImageAdapter;
 import com.project.photoshoot.basic.LoginActivity;
+import com.project.photoshoot.models.ImageFile;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 public class AdminHomeActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final String TAG = AdminHomeActivity.class.getSimpleName();
     private ImageView mMenuButton;
-    private Button mAddCategoryButton, mAlertAddCategoryButton, mBrowseButton, mLogoutButton, mHomeButton;
+    private Button mAddCategoryButton, mAlertAddCategoryButton, mBrowseButton, mLogoutButton, mViewAppointmentButton;
     private RecyclerView mDisplayCategoryRecyclerView;
     private ProgressBar mProgressBar;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -88,7 +89,7 @@ public class AdminHomeActivity extends AppCompatActivity {
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("categories");
 
         mMenuButton = findViewById(R.id.menu_button);
-        mHomeButton = findViewById(R.id.home_button);
+        mViewAppointmentButton = findViewById(R.id.view_appointment_button);
 
         mAddCategoryButton = findViewById(R.id.add_category_button);
         mLogoutButton = findViewById(R.id.logout_button);
@@ -100,81 +101,73 @@ public class AdminHomeActivity extends AppCompatActivity {
         SpacesItemDecoration decoration = new SpacesItemDecoration(10, 186);
         mDisplayCategoryRecyclerView.addItemDecoration(decoration);
 
-        mMenuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mMenuLinearLayout.getVisibility() == View.VISIBLE) {
-                    mMenuLinearLayout.setVisibility(View.GONE);
-                } else {
-                    mMenuLinearLayout.setVisibility(View.VISIBLE);
-                }
+        mMenuButton.setOnClickListener(v -> {
+            if (mMenuLinearLayout.getVisibility() == View.VISIBLE) {
+                mMenuLinearLayout.setVisibility(View.GONE);
+            } else {
+                mMenuLinearLayout.setVisibility(View.VISIBLE);
             }
         });
-
-        mLogoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                startActivity(new Intent(AdminHomeActivity.this, LoginActivity.class));
-                finish();
-            }
+        mViewAppointmentButton.setOnClickListener(v -> startActivity(new Intent(AdminHomeActivity.this, AppointmentViewActivity.class)));
+        mLogoutButton.setOnClickListener(v -> {
+            mAuth.signOut();
+            startActivity(new Intent(AdminHomeActivity.this, LoginActivity.class));
+            finish();
         });
         loadCategory();
-        mAddCategoryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(AdminHomeActivity.this);
-                View mView = getLayoutInflater().inflate(R.layout.dailog_addcategory, null);
+        mAddCategoryButton.setOnClickListener(v -> {
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(AdminHomeActivity.this);
+            View mView = getLayoutInflater().inflate(R.layout.dailog_addcategory, null);
 
-                mCategoryNameEdittext = mView.findViewById(R.id.categoryName_editText);
-                mAlertAddCategoryButton = mView.findViewById(R.id.alertAddCategory_button);
+            mCategoryNameEdittext = mView.findViewById(R.id.categoryName_editText);
+            mAlertAddCategoryButton = mView.findViewById(R.id.alertAddCategory_button);
 
-                mBrowseButton = mView.findViewById(R.id.browse_button);
-                mProgressBar = mView.findViewById(R.id.upload_progress);
-                mStatusTextView = mView.findViewById(R.id.status_imageView);
+            mBrowseButton = mView.findViewById(R.id.browse_button);
+            mProgressBar = mView.findViewById(R.id.upload_progress);
+            mStatusTextView = mView.findViewById(R.id.status_imageView);
 
-                mProgressBar.getProgressDrawable().setColorFilter(
-                        Color.WHITE, android.graphics.PorterDuff.Mode.SRC_IN);
+            mProgressBar.getProgressDrawable().setColorFilter(
+                    Color.WHITE, android.graphics.PorterDuff.Mode.SRC_IN);
 
-                mSelectedImageRecyclerView = mView.findViewById(R.id.selectedImages_recyclerView);
-                mSelectedImageRecyclerView.setLayoutManager(new LinearLayoutManager(mView.getContext(), LinearLayoutManager.HORIZONTAL, true));
-                SnapHelper helper = new LinearSnapHelper();
-                helper.attachToRecyclerView(mSelectedImageRecyclerView);
+            mSelectedImageRecyclerView = mView.findViewById(R.id.selectedImages_recyclerView);
+            mSelectedImageRecyclerView.setLayoutManager(new LinearLayoutManager(mView.getContext(), LinearLayoutManager.HORIZONTAL, true));
+            SnapHelper helper = new LinearSnapHelper();
+            helper.attachToRecyclerView(mSelectedImageRecyclerView);
 
 
-                mBrowseButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mUriList.clear();
-                        openFileChooser();
+            mBrowseButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mUriList.clear();
+                    openFileChooser();
+                }
+            });
+
+            mAlertAddCategoryButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mCategoryNameEdittext.getText().toString().isEmpty()) {
+
+                        Toast.makeText(getApplicationContext(), "Category name cannot be empty !", Toast.LENGTH_SHORT).show();
+
+                    } else if (mUriList.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "Please select Image !", Toast.LENGTH_SHORT).show();
+                    } else {
+                        //AddProduct();
+                        mAlertAddCategoryButton.setEnabled(false);
+                        uploadFile();
+                        Toast.makeText(getApplicationContext(), "Uploading...", Toast.LENGTH_SHORT).show();
+                        //mDailog.dismiss();
                     }
-                });
-
-                mAlertAddCategoryButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (mCategoryNameEdittext.getText().toString().isEmpty()) {
-
-                            Toast.makeText(getApplicationContext(), "Category name cannot be empty !", Toast.LENGTH_SHORT).show();
-
-                        } else if (mUriList.isEmpty()) {
-                            Toast.makeText(getApplicationContext(), "Please select Image !", Toast.LENGTH_SHORT).show();
-                        } else {
-                            //AddProduct();
-                            mAlertAddCategoryButton.setEnabled(false);
-                            uploadFile();
-                            Toast.makeText(getApplicationContext(), "Uploading...", Toast.LENGTH_SHORT).show();
-                            //mDailog.dismiss();
-                        }
-                    }
-                });
-                mBuilder.setView(mView);
-                mDailog = mBuilder.create();
-                mDailog.setCancelable(true);
-                mDailog.show();
-                mDailog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-            }
+                }
+            });
+            mBuilder.setView(mView);
+            mDailog = mBuilder.create();
+            mDailog.setCancelable(true);
+            mDailog.show();
+            mDailog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         });
+
 
     }
 
@@ -246,6 +239,7 @@ public class AdminHomeActivity extends AppCompatActivity {
                     SelectedImageAdapter mSelectedImageAdapter = new SelectedImageAdapter(mUriList);
                     mSelectedImageRecyclerView.setAdapter(mSelectedImageAdapter);
                     mStatusTextView.setText(filecount + "/" + mUriList.size());
+                    mSelectedImageRecyclerView.setVisibility(View.VISIBLE);
                 } else if (data.getData() != null) {
                     Uri imagePath = data.getData();
                     mUriList.clear();
@@ -255,7 +249,12 @@ public class AdminHomeActivity extends AppCompatActivity {
                     mSelectedImageRecyclerView.setAdapter(mSelectedImageAdapter);
                     mStatusTextView.setText(filecount + "/" + mUriList.size());
                     //do something with the image (save it to some directory or whatever you need to do with it here)
+                    mSelectedImageRecyclerView.setVisibility(View.VISIBLE);
                 }
+            } else {
+                mSelectedImageRecyclerView.setVisibility(View.GONE);
+                mStatusTextView.setText(filecount + "/" + mUriList.size());
+
             }
         }
 
@@ -275,7 +274,6 @@ public class AdminHomeActivity extends AppCompatActivity {
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
-
 
     private void uploadFile() {
 

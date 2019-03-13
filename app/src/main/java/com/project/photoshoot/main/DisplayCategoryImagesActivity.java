@@ -1,13 +1,7 @@
 package com.project.photoshoot.main;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,6 +18,13 @@ import com.project.photoshoot.adapters.DisplayCategoryImagesAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
+
 public class DisplayCategoryImagesActivity extends AppCompatActivity {
 
     public static String TAG = DisplayCategoryImagesActivity.class.getSimpleName();
@@ -32,24 +33,25 @@ public class DisplayCategoryImagesActivity extends AppCompatActivity {
     private List<String> mDownloadLinkList = new ArrayList<>();
     private TextView mCategoryTextView;
     private ImageView mBackButtonImageView;
+    private String mCategory_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_appoinment);
+        setContentView(R.layout.activity_display_category_images);
 
         Intent intent = getIntent();
-        String category_name = intent.getStringExtra("category_name");
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("categories").child(category_name);
+        mCategory_name = intent.getStringExtra("category_name");
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("categories").child(mCategory_name);
 
         //---------------------------------------------------------------------------------//
 
         mCategoryTextView = findViewById(R.id.categoryview);
         mBackButtonImageView = findViewById(R.id.back_button);
 
-        mCategoryTextView.setText(category_name+"'s album");
+        mCategoryTextView.setText(mCategory_name + "'s album");
         mDisplayCategoryRecyclerView = findViewById(R.id.displayCategories_recyclerView);
-        mDisplayCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        mDisplayCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         SnapHelper helper = new LinearSnapHelper();
         helper.attachToRecyclerView(mDisplayCategoryRecyclerView);
@@ -57,8 +59,7 @@ public class DisplayCategoryImagesActivity extends AppCompatActivity {
         mBackButtonImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DisplayCategoryImagesActivity.this,AdminHomeActivity.class));
-                finish();
+                onBackPressed();
             }
         });
 
@@ -99,13 +100,6 @@ public class DisplayCategoryImagesActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(DisplayCategoryImagesActivity.this,AdminHomeActivity.class));
-        finish();
-    }
 }

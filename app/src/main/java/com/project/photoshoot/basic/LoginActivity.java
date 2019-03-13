@@ -2,8 +2,6 @@ package com.project.photoshoot.basic;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +15,11 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.project.photoshoot.R;
-import com.project.photoshoot.main.AdminHomeActivity;
+import com.project.photoshoot.main.admin.AdminHomeActivity;
+import com.project.photoshoot.main.user.UserHomeActivity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -47,7 +49,11 @@ public class LoginActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, AdminHomeActivity.class));
+            if (mAuth.getCurrentUser().getEmail().equals("admin@gmail.com")) {
+                startActivity(new Intent(LoginActivity.this, AdminHomeActivity.class));
+            } else {
+                startActivity(new Intent(LoginActivity.this, UserHomeActivity.class));
+            }
             finish();
         }
 
@@ -83,10 +89,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
-    private void login(String email, String password) {
+    private void login(final String email, String password) {
         final ProgressDialog progressDialog = ProgressDialog.show(LoginActivity.this, "Please wait...", "Proccessing...", true);
 
         if (email.trim().isEmpty() || password.trim().isEmpty()) {
@@ -99,8 +104,12 @@ public class LoginActivity extends AppCompatActivity {
                             progressDialog.dismiss();
 
                             if (task.isSuccessful()) {
-                                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(LoginActivity.this, AdminHomeActivity.class));
+                                if (email.equals("admin@gmail.com")) {
+                                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(LoginActivity.this, AdminHomeActivity.class));
+                                } else {
+                                    startActivity(new Intent(LoginActivity.this, UserHomeActivity.class));
+                                }
                                 finish();
                             } else {
                                 Log.e("ERROR", task.getException().toString());

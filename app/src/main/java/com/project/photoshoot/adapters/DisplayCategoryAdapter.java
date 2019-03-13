@@ -1,21 +1,21 @@
 package com.project.photoshoot.adapters;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.project.photoshoot.ImageFile;
 import com.project.photoshoot.R;
-import com.project.photoshoot.main.AdminHomeActivity;
 import com.project.photoshoot.main.DisplayCategoryImagesActivity;
+import com.project.photoshoot.models.ImageFile;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class DisplayCategoryAdapter extends RecyclerView.Adapter<DisplayCategoryAdapter.DisplayCategoryViewHolder> {
 
@@ -63,7 +63,7 @@ public class DisplayCategoryAdapter extends RecyclerView.Adapter<DisplayCategory
             Intent intent = new Intent(itemView.getContext(), DisplayCategoryImagesActivity.class);
             intent.putExtra("category_name", String.valueOf(imageFileList.get(getAdapterPosition()).getCategoryname()));
             itemView.getContext().startActivity(intent);
-            ((AdminHomeActivity)itemView.getContext()).finish();
+
         }
     }
 }

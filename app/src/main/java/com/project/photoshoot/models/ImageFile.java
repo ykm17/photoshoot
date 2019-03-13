@@ -1,4 +1,4 @@
-package com.project.photoshoot;
+package com.project.photoshoot.models;
 
 public class ImageFile {
     String mCategoryname;
