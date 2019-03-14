@@ -96,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (email.trim().isEmpty() || password.trim().isEmpty()) {
             Toast.makeText(this, "Enter proper details !", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
         } else {
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {

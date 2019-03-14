@@ -90,10 +90,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="60dp"
-                    android:background="@drawable/curvedbackground"
                     android:fontFamily="@font/basicminimal"
                     android:text="ok"
-                    android:textColor="@color/white"
+                    android:background="@drawable/new_button"
+                    android:textColor="@drawable/new_text_color"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
@@ -107,10 +107,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="60dp"
-                    android:background="@drawable/curvedbackground"
+                    android:background="@drawable/new_button"
+                    android:textColor="@drawable/new_text_color"
                     android:fontFamily="@font/basicminimal"
                     android:text="Quit"
-                    android:textColor="@color/white"
                     android:textSize="20dp"
                     android:textStyle="bold" />
             </LinearLayout>

@@ -1,5 +1,7 @@
 package com.project.photoshoot.models;
 
+import com.google.firebase.database.Exclude;
+
 public class Appointment {
     private String bookingName, email, date, time, status;
 
@@ -52,5 +54,10 @@ public class Appointment {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Exclude
+    public String getAllValues() {
+        return bookingName + date + time + email + status;
     }
 }

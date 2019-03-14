@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main.admin.AppointmentViewActivity"></activity>
-        <activity android:name=".main.user.AppointmentActivity" />
+        <activity android:name=".main.admin.AdminAppointmentActivity"></activity>
+        <activity android:name=".main.user.UserAppointmentActivity" />
         <activity android:name=".main.user.UserHomeActivity" />
         <activity android:name=".main.DisplayCategoryImagesActivity" />
         <activity android:name=".main.admin.AdminHomeActivity" />

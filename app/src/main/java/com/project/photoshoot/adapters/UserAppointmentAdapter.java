@@ -14,10 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder> {
+public class UserAppointmentAdapter extends RecyclerView.Adapter<UserAppointmentAdapter.AppointmentViewHolder> {
     List<Appointment> mAppointmentList;
 
-    public AppointmentAdapter(List<Appointment> mAppointmentList) {
+    public UserAppointmentAdapter(List<Appointment> mAppointmentList) {
         this.mAppointmentList = mAppointmentList;
     }
 
@@ -25,7 +25,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     @Override
     public AppointmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.display_appointment, parent, false);
+        View view = layoutInflater.inflate(R.layout.display_appointment_user, parent, false);
         return new AppointmentViewHolder(view);
     }
 
@@ -36,7 +36,15 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.mBookingNameTextView.setText(name);
         holder.mDateTextView.setText(mAppointmentList.get(position).getDate());
         holder.mTimeTextView.setText(mAppointmentList.get(position).getTime());
-        holder.mStatusTextView.setText("status: " + mAppointmentList.get(position).getStatus());
+        String status = mAppointmentList.get(position).getStatus();
+        if (status.equals("confirm"))
+            holder.mStatusTextView.setTextColor(holder.itemView.getResources().getColor(R.color.green1));
+        else if (status.equals("declined"))
+            holder.mStatusTextView.setTextColor(holder.itemView.getResources().getColor(R.color.red_A200));
+        else
+            holder.mStatusTextView.setTextColor(holder.itemView.getResources().getColor(R.color.yellow_200));
+
+        holder.mStatusTextView.setText("status: " + status);
     }
 
     @Override

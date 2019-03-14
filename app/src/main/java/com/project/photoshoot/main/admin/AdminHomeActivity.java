@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,7 +57,7 @@ public class AdminHomeActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final String TAG = AdminHomeActivity.class.getSimpleName();
     private ImageView mMenuButton;
-    private Button mAddCategoryButton, mAlertAddCategoryButton, mBrowseButton, mLogoutButton, mViewAppointmentButton;
+    private Button mAddCategoryButton, mUploadButton, mBrowseButton, mLogoutButton, mViewAppointmentButton;
     private RecyclerView mDisplayCategoryRecyclerView;
     private ProgressBar mProgressBar;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -66,14 +65,14 @@ public class AdminHomeActivity extends AppCompatActivity {
     private Uri mUri = null;
 
     private List<Uri> mUriList = new ArrayList<>();
-    private List<ImageFile> imageFileList = new ArrayList<>();
+    private List<ImageFile> mImageFileList = new ArrayList<>();
     private List<String> mDownloadLink = new ArrayList<>();
 
     private AlertDialog mDailog;
     private RecyclerView mSelectedImageRecyclerView;
     private FirebaseAuth mAuth;
     private EditText mCategoryNameEdittext;
-    private TextView mStatusTextView;
+    private TextView mStatusTextView, mNoCategoryTextView;
     private int filecount = 0;
     private LinearLayout mMenuLinearLayout;
 
@@ -93,6 +92,7 @@ public class AdminHomeActivity extends AppCompatActivity {
 
         mAddCategoryButton = findViewById(R.id.add_category_button);
         mLogoutButton = findViewById(R.id.logout_button);
+        mNoCategoryTextView = findViewById(R.id.nocategory_textView);
 
         mMenuLinearLayout = findViewById(R.id.menu_linearlayout);
 
@@ -108,7 +108,7 @@ public class AdminHomeActivity extends AppCompatActivity {
                 mMenuLinearLayout.setVisibility(View.VISIBLE);
             }
         });
-        mViewAppointmentButton.setOnClickListener(v -> startActivity(new Intent(AdminHomeActivity.this, AppointmentViewActivity.class)));
+        mViewAppointmentButton.setOnClickListener(v -> startActivity(new Intent(AdminHomeActivity.this, AdminAppointmentActivity.class)));
         mLogoutButton.setOnClickListener(v -> {
             mAuth.signOut();
             startActivity(new Intent(AdminHomeActivity.this, LoginActivity.class));
@@ -120,11 +120,12 @@ public class AdminHomeActivity extends AppCompatActivity {
             View mView = getLayoutInflater().inflate(R.layout.dailog_addcategory, null);
 
             mCategoryNameEdittext = mView.findViewById(R.id.categoryName_editText);
-            mAlertAddCategoryButton = mView.findViewById(R.id.alertAddCategory_button);
+            mUploadButton = mView.findViewById(R.id.alertAddCategory_button);
 
             mBrowseButton = mView.findViewById(R.id.browse_button);
             mProgressBar = mView.findViewById(R.id.upload_progress);
             mStatusTextView = mView.findViewById(R.id.status_imageView);
+
 
             mProgressBar.getProgressDrawable().setColorFilter(
                     Color.WHITE, android.graphics.PorterDuff.Mode.SRC_IN);
@@ -135,30 +136,24 @@ public class AdminHomeActivity extends AppCompatActivity {
             helper.attachToRecyclerView(mSelectedImageRecyclerView);
 
 
-            mBrowseButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mUriList.clear();
-                    openFileChooser();
-                }
+            mBrowseButton.setOnClickListener(v1 -> {
+                mUriList.clear();
+                openFileChooser();
             });
 
-            mAlertAddCategoryButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mCategoryNameEdittext.getText().toString().isEmpty()) {
+            mUploadButton.setOnClickListener(view -> {
+                if (mCategoryNameEdittext.getText().toString().isEmpty()) {
 
-                        Toast.makeText(getApplicationContext(), "Category name cannot be empty !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Category name cannot be empty !", Toast.LENGTH_SHORT).show();
 
-                    } else if (mUriList.isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Please select Image !", Toast.LENGTH_SHORT).show();
-                    } else {
-                        //AddProduct();
-                        mAlertAddCategoryButton.setEnabled(false);
-                        uploadFile();
-                        Toast.makeText(getApplicationContext(), "Uploading...", Toast.LENGTH_SHORT).show();
-                        //mDailog.dismiss();
-                    }
+                } else if (mUriList.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please select Image !", Toast.LENGTH_SHORT).show();
+                } else {
+                    //AddProduct();
+                    mUploadButton.setEnabled(false);
+                    uploadFile();
+                    Toast.makeText(getApplicationContext(), "Uploading...", Toast.LENGTH_SHORT).show();
+                    //mDailog.dismiss();
                 }
             });
             mBuilder.setView(mView);
@@ -173,7 +168,7 @@ public class AdminHomeActivity extends AppCompatActivity {
 
     private void loadCategory() {
 
-        final DisplayCategoryAdapter mDisplayCategoryAdapter = new DisplayCategoryAdapter(imageFileList);
+        final DisplayCategoryAdapter mDisplayCategoryAdapter = new DisplayCategoryAdapter(mImageFileList, 0);
         mDisplayCategoryRecyclerView.setAdapter(mDisplayCategoryAdapter);
 
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
@@ -182,19 +177,24 @@ public class AdminHomeActivity extends AppCompatActivity {
 
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
-                imageFileList.clear();
+                mImageFileList.clear();
 
                 Log.d(TAG, "onDataChange: " + dataSnapshot.getValue());
-                //              imageFileList.clear();
+                //              mImageFileList.clear();
                 for (DataSnapshot datasnapshotobject : children) {
                     //   Toast.makeText(AdminHomeActivity.this, ""+datasnapshotobject.child("displayImage").getValue(), Toast.LENGTH_SHORT).show();
 
                     String categoryname = datasnapshotobject.getKey();
                     String displayImage = String.valueOf(datasnapshotobject.child("displayImage").getValue());
 
-                    imageFileList.add(new ImageFile(categoryname, displayImage));
+                    mImageFileList.add(new ImageFile(categoryname, displayImage));
                 }
                 mDisplayCategoryAdapter.notifyDataSetChanged();
+
+                if (mImageFileList.isEmpty())
+                    mNoCategoryTextView.setVisibility(View.VISIBLE);
+                else
+                    mNoCategoryTextView.setVisibility(View.GONE);
 
             }
 
@@ -305,44 +305,41 @@ public class AdminHomeActivity extends AppCompatActivity {
                     // Continue with the task to get the download URL
                     return productImage.getDownloadUrl();
                 }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        mDownloadLink.add(String.valueOf(downloadUri));
-                        //AddProduct(downloadUri.toString());
-                        filecount++;
-                        mStatusTextView.setText(filecount + "/" + size);
-                        mProgressBar.setProgress(0);
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
+            }).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    mDownloadLink.add(String.valueOf(downloadUri));
+                    //AddProduct(downloadUri.toString());
+                    filecount++;
+                    mStatusTextView.setText(filecount + "/" + size);
+                    mProgressBar.setProgress(0);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
 
-                                if (mDailog.isShowing() && filecount == size) {
-                                    mDailog.dismiss();
-                                    mUriList.clear();
-                                    Toast.makeText(AdminHomeActivity.this, "Files Uploaded", Toast.LENGTH_SHORT).show();
-                                    mAlertAddCategoryButton.setEnabled(true);
-                                    //Toast.makeText(AdminHomeActivity.this, "" + mDownloadLink.size(), Toast.LENGTH_SHORT).show();
+                            if (mDailog.isShowing() && filecount == size) {
+                                mDailog.dismiss();
+                                mUriList.clear();
+                                Toast.makeText(AdminHomeActivity.this, "Files Uploaded", Toast.LENGTH_SHORT).show();
+                                mUploadButton.setEnabled(true);
+                                //Toast.makeText(AdminHomeActivity.this, "" + mDownloadLink.size(), Toast.LENGTH_SHORT).show();
 
+                                mDatabaseReference.child(String.valueOf(mCategoryNameEdittext.getText()).trim())
+                                        .child("displayImage").setValue(mDownloadLink.get(0));
+
+                                for (String downloadlink : mDownloadLink) {
                                     mDatabaseReference.child(String.valueOf(mCategoryNameEdittext.getText()).trim())
-                                            .child("displayImage").setValue(mDownloadLink.get(0));
-
-                                    for (String downloadlink : mDownloadLink) {
-                                        mDatabaseReference.child(String.valueOf(mCategoryNameEdittext.getText()).trim())
-                                                .push().setValue(downloadlink);
-                                    }
-                                    mDownloadLink.clear();
-
-
+                                            .push().setValue(downloadlink);
                                 }
-                            }
-                        }, 500);
+                                mDownloadLink.clear();
 
-                    } else {
-                        // Handle failures
-                    }
+
+                            }
+                        }
+                    }, 500);
+
+                } else {
+                    // Handle failures
                 }
             });
 

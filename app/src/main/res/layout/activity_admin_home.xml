@@ -53,10 +53,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/button"
+            android:background="@drawable/new_button"
+            android:textColor="@drawable/new_text_color"
             android:text="Add Category"
             android:textAllCaps="false"
-            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <Button
@@ -64,23 +64,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/button"
+            android:background="@drawable/new_button"
+            android:textColor="@drawable/new_text_color"
             android:text="Appointment"
             android:textAllCaps="false"
-            android:textColor="@color/white"
             android:textSize="15sp" />
         <Button
             android:id="@+id/logout_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/button"
+            android:background="@drawable/new_button"
+            android:textColor="@drawable/new_text_color"
             android:text="Logout"
             android:textAllCaps="false"
-            android:textColor="@color/white"
             android:textSize="15sp" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/nocategory_textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/basicminimal"
+        android:gravity="center"
+        android:text="Currently no categories  !"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/displayCategories_recyclerView"

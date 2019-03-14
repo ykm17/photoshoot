@@ -20,16 +20,23 @@ import androidx.recyclerview.widget.RecyclerView;
 public class DisplayCategoryAdapter extends RecyclerView.Adapter<DisplayCategoryAdapter.DisplayCategoryViewHolder> {
 
     List<ImageFile> imageFileList;
+    int userCode;
 
-    public DisplayCategoryAdapter(List<ImageFile> imageFileList) {
+    public DisplayCategoryAdapter(List<ImageFile> imageFileList, int userCode) {
         this.imageFileList = imageFileList;
+        this.userCode = userCode;
     }
 
     @NonNull
     @Override
     public DisplayCategoryViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View view = inflater.inflate(R.layout.display_category, viewGroup, false);
+        View view;
+        if (userCode == 0)
+            view = inflater.inflate(R.layout.display_category_admin, viewGroup, false);
+        else
+            view = inflater.inflate(R.layout.display_category_user, viewGroup, false);
+
         return new DisplayCategoryViewHolder(view);
     }
 

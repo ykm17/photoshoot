@@ -12,7 +12,7 @@ import com.project.photoshoot.main.admin.fragments.PendingRequest;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-public class AppointmentViewActivity extends AppCompatActivity {
+public class AdminAppointmentActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -24,7 +24,7 @@ public class AppointmentViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_appointment_view);
+        setContentView(R.layout.activity_admin_appointment);
 
         viewPager = findViewById(R.id.viewpager_id);
         RequestViewPagerApdater requestPagerApdater = new RequestViewPagerApdater(getSupportFragmentManager());

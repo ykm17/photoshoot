@@ -5,8 +5,18 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/noappointment_textView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="2"
-        android:textSize="40sp" />
+        android:fontFamily="@font/basicminimal"
+        android:gravity="center"
+        android:text="No confirm appointments  !"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/confirm_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

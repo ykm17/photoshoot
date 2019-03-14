@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/grey1"
     android:orientation="vertical"
-    tools:context=".main.admin.AppointmentViewActivity">
+    tools:context=".main.admin.AdminAppointmentActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tablayout_id"
