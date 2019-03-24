@@ -6,6 +6,14 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/grey_800</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorSurface">@color/white</item>
+
+
+        <item name="md_color_title">@color/white</item>
+        <item name="md_color_content">@color/white</item>
+        <item name="md_color_button_text">@color/white</item>
+
+
     </style>
 
     <style name="raisedbutton" parent="Widget.AppCompat.Button.Colored">
