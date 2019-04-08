@@ -89,10 +89,14 @@ public class ImageBookThemeActivity extends AppCompatActivity {
 
     public void initThemes() {
 
-        mThemeList.add("https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.trueshayari.in%2Fwp-content%2Fuploads%2F2017%2F12%2FHappy-New-Year-Wallpaper-for-Laptop.jpg&f=1");
-        mThemeList.add("https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.itsnotaboutme.tv%2Fnews%2Fwp%2Fwp-content%2Fuploads%2Fpostal_de_cumplea_os_con_mensaje_happy_birthday_para_compartir.jpg&f=1");
-        mThemeList.add("https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fs1.card-images.com%2Fimages%2Fproducts%2FCD5523_Z.jpg&f=1");
+        mThemeList.add("http://www.ypcatering.com/wp-content/uploads/2015/12/Happy-New-Year.jpg");
         mThemeList.add("https://i.pinimg.com/originals/88/39/f4/8839f44842403586283b4574df38e9e0.jpg    ");
+        mThemeList.add("https://i.pinimg.com/originals/5d/2e/33/5d2e33f8eb3bf01e86fd7639af38bf34.png");
+        mThemeList.add("https://i.pinimg.com/originals/8c/97/f3/8c97f396734c5a3ab2a8dae5be519b1d.jpg");
+        mThemeList.add("https://static.vecteezy.com/system/resources/previews/000/210/989/original/happy-fathers-day-vector.jpg");
+        mThemeList.add("https://cdn2.vectorstock.com/i/1000x1000/39/71/happy-friendship-day-poster-vector-15713971.jpg");
+        mThemeList.add("https://asset.holidaycardsapp.com/assets/card/valentine32-5acf38538d3395d6ea280e7b721dfa3d.png");
+        mThemeList.add("https://images.unsplash.com/photo-1482329833197-916d32bdae74?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80");
 
         mAdapter.notifyDataSetChanged();
     }
