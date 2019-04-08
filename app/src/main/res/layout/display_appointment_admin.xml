@@ -30,6 +30,17 @@
                 android:textSize="26sp" />
 
             <TextView
+                android:id="@+id/category_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:fontFamily="@font/basicminimal"
+                android:gravity="start"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
                 android:id="@+id/email_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,6 +50,7 @@
                 android:text="email@gmail.com"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
+
         </LinearLayout>
 
         <LinearLayout

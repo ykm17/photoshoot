@@ -1,34 +1,26 @@
 package com.project.photoshoot.main.user;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SimpleItemAnimator;
-import ja.burhanrashid52.photoeditor.PhotoEditor;
-
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcel;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.burhanrashid52.imageeditor.EditImageActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.project.photoshoot.ImageBookPaymentActivity;
+import com.project.photoshoot.R;
 import com.project.photoshoot.adapters.ImageBookDragAdapter;
 import com.project.photoshoot.listener.RecyclerTouchListener;
 import com.project.photoshoot.models.ImageBookModel;
@@ -37,10 +29,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.project.photoshoot.R;
-
-
-import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import static android.view.View.GONE;
 
@@ -52,8 +45,8 @@ public class ImageBookActivity extends AppCompatActivity {
     private List<ImageBookModel> mImagesForBook = new ArrayList<>();
 
 
-    private View mUploadLayout;
-    private View mRecyclerLayout;
+    private Button mUploadButton;
+    private FloatingActionButton mNextFabButton;
     private RecyclerView mImageRecyclerView;
     RecyclerView.Adapter mAdapter;
 
@@ -66,24 +59,18 @@ public class ImageBookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_book);
 
-
         initRecyclerView();
 
+        mUploadButton = findViewById(R.id.upload_bt);
+        mNextFabButton = findViewById(R.id.next_fab);
+        mImageRecyclerView = findViewById(R.id.imagebook_rv);
+        mImageRecyclerView.setVisibility(GONE);
 
-        mUploadLayout  = findViewById(R.id.upload_layout);
-        mRecyclerLayout = findViewById(R.id.images_layout);
-        mRecyclerLayout.setVisibility(GONE);
 
-
-        mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        mToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(mToolbar);
 
-
-
-
-
-
-
+        mNextFabButton.setOnClickListener(v -> goToPayment());
 
     }
 
@@ -193,11 +180,11 @@ public class ImageBookActivity extends AppCompatActivity {
                     mImagesForBook.add(new ImageBookModel(imagePath));
                 }
 
-                mRecyclerLayout.setVisibility(View.VISIBLE);
-                mUploadLayout.setVisibility(GONE);
+                mImageRecyclerView.setVisibility(View.VISIBLE);
+                mUploadButton.setVisibility(GONE);
             } else {
-                mRecyclerLayout.setVisibility(GONE);
-                mUploadLayout.setVisibility(View.VISIBLE);
+                mImageRecyclerView.setVisibility(GONE);
+                mUploadButton.setVisibility(View.VISIBLE);
             }
         }
 
@@ -226,6 +213,7 @@ public class ImageBookActivity extends AppCompatActivity {
             //       Picasso.get().load(mUri).into(mPreviewImage);
         }
         */
+
     }
 
     public void openFileChooser(View v) {
@@ -237,37 +225,25 @@ public class ImageBookActivity extends AppCompatActivity {
 
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.imagebook_menu,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-
-            case R.id.action_ib_done: goToPayment();
-            default: return  false;
-        }
-    }
-
     private void goToPayment() {
 
-        Intent i  =  new Intent(this,ImageBookPaymentActivity.class);
+        if (!mImagesForBook.isEmpty()) {
+            Intent i = new Intent(this, ImageBookPaymentActivity.class);
 
-        Type type = new TypeToken<List<ImageBookModel>>() {}.getType();
+            Type type = new TypeToken<List<ImageBookModel>>() {
+            }.getType();
 
 
-        Gson g = new GsonBuilder()
-                .registerTypeAdapter(Uri.class, new ImageBookModel.UriSerializer())
-                .create();
+            Gson g = new GsonBuilder()
+                    .registerTypeAdapter(Uri.class, new ImageBookModel.UriSerializer())
+                    .create();
 
-        i.putExtra("data",g.toJson(mImagesForBook,type));
-        startActivity(i);
-
+            i.putExtra("data", g.toJson(mImagesForBook, type));
+            startActivity(i);
+        } else {
+            Toast.makeText(this, "Select Images to upload !", Toast.LENGTH_SHORT).show();
+        }
+        
 
 
     }

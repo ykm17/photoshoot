@@ -1,7 +1,5 @@
 package com.project.photoshoot;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,7 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,13 +18,14 @@ import com.project.photoshoot.main.pdf.PDFRender;
 import com.project.photoshoot.models.ImageBookModel;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ImageBookPaymentActivity extends AppCompatActivity {
 
@@ -45,7 +44,6 @@ public class ImageBookPaymentActivity extends AppCompatActivity {
         String json = getIntent().getStringExtra("data");
 
 
-        Toast.makeText(this, json, Toast.LENGTH_SHORT).show();
 
 
         Type type = new TypeToken<List<ImageBookModel>>() {}.getType();
@@ -106,7 +104,6 @@ public class ImageBookPaymentActivity extends AppCompatActivity {
             try {
                 this.file = saveToFile(result);
 
-
                 mImagesForBook.get(0).setPhotoURI(Uri.fromFile(file));
 
                 Toast.makeText(ImageBookPaymentActivity.this, file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
@@ -115,6 +112,7 @@ public class ImageBookPaymentActivity extends AppCompatActivity {
 
             } catch (IOException e) {
                 e.printStackTrace();
+                Log.d("$$", "onPostExecute: " + e);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

@@ -2,9 +2,11 @@ package com.project.photoshoot.main.user;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +53,8 @@ public class UserAppointmentActivity extends AppCompatActivity implements TimePi
     private List<Appointment> mAppointmentList = new ArrayList<>();
     private TextView mSelectedDate, mSelectedTime, mNoAppointment;
     private UserAppointmentAdapter mUserAppointmentAdapter;
+    private Spinner spinner2;
+    private String mSelectedCategory = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,11 +110,48 @@ public class UserAppointmentActivity extends AppCompatActivity implements TimePi
             onBackPressed();
         });
 
+
+        //
+        addItemsOnSpinner2(mView);
+        //
         mBuilder.setView(mView);
         mAlertDialog = mBuilder.create();
         mAlertDialog.setCanceledOnTouchOutside(false);
         mAlertDialog.show();
     }
+
+    public void addItemsOnSpinner2(View mView) {
+
+        spinner2 = mView.findViewById(R.id.category_spinner);
+        List<String> list = new ArrayList<String>();
+        list.add("Select Category");
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("categories");
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+
+                for (DataSnapshot datasnapshotobject : children) {
+                    list.add(datasnapshotobject.getKey());
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner2.setAdapter(dataAdapter);
+    }
+
 
     private void fetchAppointments() {
 
@@ -182,45 +223,47 @@ public class UserAppointmentActivity extends AppCompatActivity implements TimePi
     }
 
     private void pushData() {
+        mSelectedCategory = String.valueOf(spinner2.getSelectedItem());
+        if (!mSelectedCategory.equals("Select Category")) {
+            mFound = 0;
+            Appointment appointment = new Appointment(mBookingNameEditText.getText() + "",
+                    mAuth.getCurrentUser().getEmail(),
+                    mSelectedDate.getText() + "",
+                    mSelectedTime.getText() + "",
+                    "pending",
+                    mSelectedCategory);
 
-        mFound = 0;
-        Appointment appointment = new Appointment(mBookingNameEditText.getText() + "",
-                mAuth.getCurrentUser().getEmail(),
-                mSelectedDate.getText() + "",
-                mSelectedTime.getText() + "",
-                "pending");
+            mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
-        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                    for (DataSnapshot datasnapshotobject : children) {
 
-                for (DataSnapshot datasnapshotobject : children) {
-
-                    if (datasnapshotobject.getValue(Appointment.class).getDate()
-                            .equals(appointment.getDate()) &&
-                            datasnapshotobject.getValue(Appointment.class).getTime()
-                                    .equals(appointment.getTime())) {
-                        mFound++;
-                        break;
+                        if (datasnapshotobject.getValue(Appointment.class).getDate()
+                                .equals(appointment.getDate()) &&
+                                datasnapshotobject.getValue(Appointment.class).getTime()
+                                        .equals(appointment.getTime())) {
+                            mFound++;
+                            break;
+                        }
                     }
+
+                    if (mFound == 0)
+                        mDatabaseReference.push().setValue(appointment);
+                    else
+                        Toast.makeText(UserAppointmentActivity.this, "Appointment is booked for this date and time ! Try other :(", Toast.LENGTH_LONG).show();
+
+
+                    mAlertDialog.dismiss();
                 }
 
-                if (mFound == 0)
-                    mDatabaseReference.push().setValue(appointment);
-                else
-                    Toast.makeText(UserAppointmentActivity.this, "Appointment is booked for this date and time ! Try other :(", Toast.LENGTH_LONG).show();
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-
-                mAlertDialog.dismiss();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
+                }
+            });
+        } else Toast.makeText(this, "Select category !", Toast.LENGTH_SHORT).show();
 
     }
 

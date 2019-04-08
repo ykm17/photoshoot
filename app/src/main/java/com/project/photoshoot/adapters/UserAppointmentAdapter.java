@@ -45,6 +45,8 @@ public class UserAppointmentAdapter extends RecyclerView.Adapter<UserAppointment
             holder.mStatusTextView.setTextColor(holder.itemView.getResources().getColor(R.color.yellow_200));
 
         holder.mStatusTextView.setText("status: " + status);
+        holder.mCategoryTextView.setText("Category: " + mAppointmentList.get(position).getCategory());
+
     }
 
     @Override
@@ -54,7 +56,7 @@ public class UserAppointmentAdapter extends RecyclerView.Adapter<UserAppointment
 
     public class AppointmentViewHolder extends RecyclerView.ViewHolder {
 
-        TextView mBookingNameTextView, mDateTextView, mTimeTextView, mStatusTextView;
+        TextView mBookingNameTextView, mDateTextView, mTimeTextView, mStatusTextView, mCategoryTextView;
 
         public AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,6 +64,7 @@ public class UserAppointmentAdapter extends RecyclerView.Adapter<UserAppointment
             mDateTextView = itemView.findViewById(R.id.date_edittext);
             mTimeTextView = itemView.findViewById(R.id.time_edittext);
             mStatusTextView = itemView.findViewById(R.id.status_edittext);
+            mCategoryTextView = itemView.findViewById(R.id.category_edittext);
 
         }
     }

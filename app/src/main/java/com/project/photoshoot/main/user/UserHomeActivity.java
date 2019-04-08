@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.project.photoshoot.ImageBookThemeActivity;
 import com.project.photoshoot.R;
 import com.project.photoshoot.adapters.DisplayCategoryAdapter;
 import com.project.photoshoot.basic.LoginActivity;
@@ -32,7 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class UserHomeActivity extends AppCompatActivity {
 
     private static final String TAG = UserHomeActivity.class.getSimpleName();
-    private Button mLogoutButton, mAppointmentButton;
+    private Button mLogoutButton, mAppointmentButton, mPhotoBookButton;
     private ImageView mMenuButton;
     private RecyclerView mDisplayCategoryRecyclerView;
     private ProgressBar mProgressBar;
@@ -58,6 +59,8 @@ public class UserHomeActivity extends AppCompatActivity {
         mLogoutButton = findViewById(R.id.logout_button);
 
         mMenuButton = findViewById(R.id.menu_button);
+        mPhotoBookButton = findViewById(R.id.photobook_button);
+
         mMenuLinearLayout = findViewById(R.id.menu_linearlayout);
 
         mNoCategoryTextView = findViewById(R.id.nocategory_textView);
@@ -89,6 +92,14 @@ public class UserHomeActivity extends AppCompatActivity {
                 mAuth.signOut();
                 startActivity(new Intent(UserHomeActivity.this, LoginActivity.class));
                 finish();
+            }
+        });
+
+        mPhotoBookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserHomeActivity.this, ImageBookThemeActivity.class));
+                //finish();
             }
         });
 

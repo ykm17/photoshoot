@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey1"
     tools:context=".main.user.ImageBookActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -11,50 +12,48 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
+        android:backgroundTint="@color/grey1"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="Upload and Edit"
+        app:titleTextColor="@color/white" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/next_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/ic_save"
+        android:src="@drawable/ic_keyboard_arrow_right_white_24dp" />
 
 
-    <RelativeLayout
-        android:layout_below="@+id/my_toolbar"
+    <Button
+        android:id="@+id/upload_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/new_button"
+        android:onClick="openFileChooser"
+        android:text="Upload"
+        android:textAllCaps="false"
+        android:textColor="@drawable/new_text_color"
+        android:textSize="15sp" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/imagebook_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-
-            android:id="@+id/upload_layout"
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-
-            <Button
-                android:id="@+id/upload_bt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Upload"
-                android:onClick="openFileChooser"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/images_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="5dp">
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/imagebook_rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
-        </LinearLayout>
-    </RelativeLayout>
-
-
-
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp" />
 
 
 </RelativeLayout>

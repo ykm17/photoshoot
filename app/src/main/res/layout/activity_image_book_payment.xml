@@ -4,24 +4,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey1"
     tools:context=".ImageBookPaymentActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:backgroundTint="@color/grey1"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="Payment Summary"
+        app:titleTextColor="@color/white" />
 
-
-    <TextView
-        android:id="@+id/payment_amount_tv"
-        android:text="500Rs"
+    <LinearLayout
+        android:id="@+id/ln"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="28sp"
-        android:textColor="@color/black"/>
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/new_button"
+        android:orientation="horizontal"
+        android:padding="16dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/basicminimal"
+            android:text="Package Cost:"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
 
-    <Button
-        android:text="Checkout"
-        android:layout_alignParentBottom="true"
-        android:onClick="done"
+        <TextView
+            android:id="@+id/payment_amount_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/basicminimal"
+            android:gravity="start"
+            android:text="500Rs"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ln"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="@font/basicminimal"
+        android:text="After checkout, a pdf will be created of your images.
+\nYour can find that pdf in your download directory."
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:onClick="done"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/new_button"
+        android:text="Checkout"
+        android:textColor="@drawable/new_text_color" />
 
 </RelativeLayout>

@@ -1,27 +1,20 @@
 package com.project.photoshoot.main.pdf;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hendrix.pdfmyxml.PdfDocument;
 import com.hendrix.pdfmyxml.viewRenderer.AbstractViewRenderer;
-import com.pdfjet.PDF;
+import com.project.photoshoot.R;
+import com.project.photoshoot.main.user.UserHomeActivity;
 import com.project.photoshoot.models.ImageBookModel;
 
 import java.io.File;
 import java.util.List;
-
-import com.project.photoshoot.R;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 public class PDFRender {
 
@@ -60,7 +53,7 @@ public class PDFRender {
         doc.setOrientation(PdfDocument.A4_MODE.LANDSCAPE);
         doc.setProgressTitle(R.string.gen_please_wait);
         doc.setProgressMessage(R.string.gen_pdf_file);
-        doc.setFileName("test");
+        doc.setFileName("testfile");
         doc.setSaveDirectory(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
         doc.setInflateOnMainThread(false);
         doc.setListener(new PdfDocument.Callback() {
@@ -68,7 +61,9 @@ public class PDFRender {
             public void onComplete(File file) {
                 Toast.makeText(activity, "PDF Created", Toast.LENGTH_SHORT).show();
 
-
+                Intent intent = new Intent(activity, UserHomeActivity.class);
+                activity.startActivity(intent);
+                activity.finish();
                 //TODO: Send it as mail now Sendmail Class
 
             }

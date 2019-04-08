@@ -3,17 +3,18 @@ package com.project.photoshoot.models;
 import com.google.firebase.database.Exclude;
 
 public class Appointment {
-    private String bookingName, email, date, time, status;
+    private String bookingName, email, date, time, status, category;
 
     public Appointment() {
     }
 
-    public Appointment(String bookingName, String email, String date, String time, String status) {
+    public Appointment(String bookingName, String email, String date, String time, String status, String category) {
         this.bookingName = bookingName;
         this.email = email;
         this.date = date;
         this.time = time;
         this.status = status;
+        this.category = category;
     }
 
     public String getBookingName() {
@@ -59,5 +60,13 @@ public class Appointment {
     @Exclude
     public String getAllValues() {
         return bookingName + date + time + email + status;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

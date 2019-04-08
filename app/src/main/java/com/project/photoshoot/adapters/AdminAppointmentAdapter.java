@@ -45,6 +45,7 @@ public class AdminAppointmentAdapter extends RecyclerView.Adapter<AdminAppointme
         holder.mEmailTextView.setText(mAppointmentList.get(position).getEmail());
         holder.mDateTextView.setText(mAppointmentList.get(position).getDate());
         holder.mTimeTextView.setText(mAppointmentList.get(position).getTime());
+        holder.mCategoryTextView.setText("Category: " + mAppointmentList.get(position).getCategory());
 
         if (mAppointmentList.get(position).getStatus().equals("pending"))
             holder.mButtonLinearLayout.setVisibility(View.VISIBLE);
@@ -93,7 +94,7 @@ public class AdminAppointmentAdapter extends RecyclerView.Adapter<AdminAppointme
 
     public class AppointmentViewHolder extends RecyclerView.ViewHolder {
 
-        TextView mBookingNameTextView, mEmailTextView, mDateTextView, mTimeTextView;
+        TextView mBookingNameTextView, mEmailTextView, mDateTextView, mTimeTextView, mCategoryTextView;
         ImageView mAcceptButton, mRejectButton;
         LinearLayout mButtonLinearLayout;
 
@@ -104,6 +105,8 @@ public class AdminAppointmentAdapter extends RecyclerView.Adapter<AdminAppointme
 
             mDateTextView = itemView.findViewById(R.id.date_edittext);
             mTimeTextView = itemView.findViewById(R.id.time_edittext);
+            mCategoryTextView = itemView.findViewById(R.id.category_edittext);
+
             mAcceptButton = itemView.findViewById(R.id.accept_button);
             mRejectButton = itemView.findViewById(R.id.reject_button);
             mButtonLinearLayout = itemView.findViewById(R.id.button_linearLayout);

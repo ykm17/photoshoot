@@ -1,58 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey1"
     tools:context=".ImageBookThemeActivity">
-
-
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
 
 
     <TextView
         android:id="@+id/select_tv"
-        android:text="Select a front Cover"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/my_toolbar"
-        android:textSize="23sp"
-        android:textColor="@color/black"
-        android:layout_margin="5dp"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/cursue"
+        android:text="Select a front Cover"
         android:textAlignment="center"
-        />
+        android:textColor="@color/white"
+        android:textSize="23sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/theme_rv"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/select_tv"
-        />
-
-
-
-
-
+        android:layout_marginTop="10dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/next_fab"
-        android:src="@drawable/ic_keyboard_arrow_right_white_24dp"
-        android:background="@drawable/ic_save"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="next"/>
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/ic_save"
+        android:onClick="next"
+        android:src="@drawable/ic_keyboard_arrow_right_white_24dp" />
+
 
 </RelativeLayout>
