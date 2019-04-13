@@ -89,7 +89,7 @@ public class ImageBookThemeActivity extends AppCompatActivity {
 
     public void initThemes() {
 
-        mThemeList.add("http://www.ypcatering.com/wp-content/uploads/2015/12/Happy-New-Year.jpg");
+        mThemeList.add("https://i0.wp.com/techbeasts.com/wp-content/uploads/2016/12/happy-new-year-linux-fans-413000-2.jpg");
         mThemeList.add("https://i.pinimg.com/originals/88/39/f4/8839f44842403586283b4574df38e9e0.jpg    ");
         mThemeList.add("https://i.pinimg.com/originals/5d/2e/33/5d2e33f8eb3bf01e86fd7639af38bf34.png");
         mThemeList.add("https://i.pinimg.com/originals/8c/97/f3/8c97f396734c5a3ab2a8dae5be519b1d.jpg");

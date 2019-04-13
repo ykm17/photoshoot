@@ -1,16 +1,26 @@
 package com.project.photoshoot;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -25,7 +35,9 @@ import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 public class ImageBookPaymentActivity extends AppCompatActivity {
 
@@ -33,6 +45,8 @@ public class ImageBookPaymentActivity extends AppCompatActivity {
     List<ImageBookModel> mImagesForBook;
     ProgressDialog mProgressDialog;
 
+
+    boolean permission = false;
     String URL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,18 +66,27 @@ public class ImageBookPaymentActivity extends AppCompatActivity {
                 .create();
         mImagesForBook  = gson.fromJson(json,type);
 
-        Toast.makeText(this, mImagesForBook.size() +  "", Toast.LENGTH_SHORT).show();
 
         URL = mImagesForBook.get(0).getPhotoUrl();
+
+
+
 
     }
 
 
     public void done(View v) {
 
-        new DownloadImage().execute(URL);
-
+        if(permission)
+            new  DownloadImage().execute(URL);
+        else {
+            if(isReadStoragePermissionGranted() && isReadStoragePermissionGranted()) {
+                permission = true;
+            }
+        }
     }
+
+
 
 
 
@@ -106,9 +129,10 @@ public class ImageBookPaymentActivity extends AppCompatActivity {
 
                 mImagesForBook.get(0).setPhotoURI(Uri.fromFile(file));
 
-                Toast.makeText(ImageBookPaymentActivity.this, file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
 
                 new PDFRender(mImagesForBook).createPDF(ImageBookPaymentActivity.this);
+
+
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -134,6 +158,53 @@ public class ImageBookPaymentActivity extends AppCompatActivity {
             fOut.close(); // do not forget to close the stream
             return file;
         }
+    }
+
+    public  boolean isReadStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 3);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            return true;
+        }
+    }
+
+    public  boolean isWriteStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 3);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            return true;
+        }
+    }
+
+    public void uploadFromFile(Uri uri) {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"happyshoots12325@gmail.com"});
+        i.putExtra(Intent.EXTRA_SUBJECT, "Photobook");
+        i.putExtra(Intent.EXTRA_TEXT   , "[Address here]" + "<"+FirebaseAuth.getInstance().getCurrentUser().getUid()+">");
+        i.putExtra(Intent.EXTRA_STREAM, uri);
+        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        try {
+
+            startActivity(Intent.createChooser(i, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+        }
+
     }
 }
 

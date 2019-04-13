@@ -2,6 +2,7 @@ package com.project.photoshoot.main.pdf;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,12 +10,16 @@ import android.widget.Toast;
 
 import com.hendrix.pdfmyxml.PdfDocument;
 import com.hendrix.pdfmyxml.viewRenderer.AbstractViewRenderer;
+import com.project.photoshoot.BuildConfig;
+import com.project.photoshoot.ImageBookPaymentActivity;
 import com.project.photoshoot.R;
 import com.project.photoshoot.main.user.UserHomeActivity;
 import com.project.photoshoot.models.ImageBookModel;
 
 import java.io.File;
 import java.util.List;
+
+import androidx.core.content.FileProvider;
 
 public class PDFRender {
 
@@ -37,7 +42,7 @@ public class PDFRender {
 
 
 
-    public void createPDF(Activity activity) {
+    public void createPDF(ImageBookPaymentActivity activity) {
 
             //Create the pages
             //Add the pages to PDF
@@ -53,19 +58,15 @@ public class PDFRender {
         doc.setOrientation(PdfDocument.A4_MODE.LANDSCAPE);
         doc.setProgressTitle(R.string.gen_please_wait);
         doc.setProgressMessage(R.string.gen_pdf_file);
-        doc.setFileName("testfile");
+        doc.setFileName("photobook");
         doc.setSaveDirectory(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
         doc.setInflateOnMainThread(false);
         doc.setListener(new PdfDocument.Callback() {
             @Override
             public void onComplete(File file) {
                 Toast.makeText(activity, "PDF Created", Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(activity, UserHomeActivity.class);
-                activity.startActivity(intent);
-                activity.finish();
-                //TODO: Send it as mail now Sendmail Class
-
+                Uri uri = FileProvider.getUriForFile(activity, "com.project.photoshoot.GenericFileProvider", file);
+                activity.uploadFromFile(uri);
             }
 
             @Override

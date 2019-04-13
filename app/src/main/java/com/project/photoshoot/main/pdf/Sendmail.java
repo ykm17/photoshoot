@@ -6,16 +6,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.io.File;
 import java.util.*;
 
+import androidx.annotation.NonNull;
+
 public class Sendmail {
-    public static void send(File file, Context context) {
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setData(Uri.parse("mailto:"));
-        emailIntent.setType("text/plain");
-        emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-        context.startActivity(Intent.createChooser(emailIntent,"Sending email..."));
+
+    public void UploadImageFileToFirebaseStorage(Uri uri) {
+
+        if (uri != null) {
+
+            
+        }
     }
 }
 
