@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey1"
+    tools:context=".basic.FAQ">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/grey1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/basicminimal"
+            android:gravity="center"
+            android:text="\nFAQs"
+            android:textColor="@color/white"
+            android:textSize="46sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/basicminimal"
+            android:gravity="start"
+            android:text="\n1. What do I wear for my photo shoot?\n\n
+With Studio 828 Photography we will photograph you in up to 5 different outfits. Each of our sessions and posing maps are tailored to each of our photography clients here in Asheville so we recommend that you bring any and everything that you feel beautiful in. Let\'s run the gamut with your wardrobe choices! Some key things to keep in mind:
+\n\n
+Wear a button down to the studio. This will make the transition from the hair and makeup chair to your first wardrobe choice much easier.
+Think texture OVER print. Big, bold and crazy patterns distract from your face, especially in photos. Textures however photograph beautifully. Textures are: cable knit, denim, lace (GAH! I love shooting lace), tulle, chiffon, velvet, even fur. Also, if you absolutely must have a print, consider pairing it with a cardigan or a texture to tone the print down around your face.
+\n\nBring a range. While we only photograph you in 5 outfits, bring 20. We'll put things together at your arrival and who knows? Maybe I\'ll even put together options you haven\'t thought to wear yet!
+One of the resources THAT I LOVE is Rent the Runway. They're perfect not only for the woman that participates in several functions and doesn\'t want to wear the same dress twice, but also for the woman that doesn\'t really do the  all that often and needs something EPIC for her photo shoot but no real occasion to wear it after the fact. I love using Rent the Runway so much, I have partnered with them for my clients. That is HOW much I love them!!\n"
+            android:textColor="@color/white"
+            android:textSize="23sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/basicminimal"
+            android:gravity="start"
+            android:text="2. Hitarth Saiya: How do I prepare for my photo shoot? What do I need to do?\n\n
+Look, each of us has our own routine but when you\'re preparing for any kind of photo shoot you really do need to consider the details. Hair, nails, waxing, skin, to tan or not to tan, etc. These are our recommendations:
+\n\n
+Hair cut/color: this should be scheduled 10-14 days prior to your photo shoot. This gives your hair the time it needs to settle in to the new style and texture.
+Nails: Take advantage of the purpose for having your shoot ladies. Go hit up the salon for a mani-pedi. Your hands and nails will be in the pictures and you want them to be polished and looking gorgeous. We do recommend staying away from heavier tones in photographs but, you know what works best for you. Can\'t decide? Go with a clean polish. The buffing and shaping alone will help immensely.
+\n\nWaxing: 3-5 days prior to your shoot. Skin can be very disagreeable when it comes to waxing. No one wants giant red welts in their pictures. No one.
+To tan or not to tan. Tanning bed or spray? This answer is not going to be popular with many but we do not endorse tanning prior to a photo shoot. I know many of you are looking for that sun kissed glow but with so many of the results, we find that fake or real, tanning does nothing but age you. And fake tans, girl, no one and I mean NO ONE wants that weird candy orange glow in their pictures.\n"
+            android:textColor="@color/white"
+            android:textSize="23sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/basicminimal"
+            android:gravity="start"
+            android:text="3. How much do you alter the pictures?
+            \n\n
+Ah retouching. This seems to be such a hot topic these days. My job as a photographer and artist is to not only take the most beautiful images that you\'ve ever seen of yourself but to create beautiful artwork. Another part of my job is to ensure that you feel absolutely stunning in your images. I employ many methods to this, one of which is Photoshop.\n\n What I will not do is make you look like someone else. Our posing methods take care to emphasize only the parts about you that you love the most and this posing also helps to minimize what you may not love quite so much. Our post processing process is to help create the artwork from the vision that we have going in to your session. Will Iretouch you down 40 pounds? No. Will I smooth your skin and remove shadows? Yes. My general rule of thumb is that you don't take away the lines (we've earned them after all) but we take away the shadows the lines create.\n"
+            android:textColor="@color/white"
+            android:textSize="23sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/basicminimal"
+            android:gravity="start"
+            android:text="4. What if I just want digital copies?\n\n
+Digital copies of any product purchased are included at high printable and web resolution. For example, say you purchase a collection of 5 images at 8x12 and a gallery wrapped canvas at 16x20. You will receive digital files of the 5 images sized to 8x12 and the file for your canvas at 16x20.\n"
+            android:textColor="@color/white"
+            android:textSize="23sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/basicminimal"
+            android:gravity="start"
+            android:text="5. Do you photograph families, newborns, or seniors?
+\n\nOf course I do! My specialization is in photographing women and the people they love.
+Family Photography: we photograph a beauty session with Mom and bring the rest of the family in for the last 30 minutes. We've found that kids can be distracted/ing for an hour long photo shoot and 30 minutes seems to be the sweet spot whether in the studio or on location. Let's start with some time to pamper you, Mom. We'll create beautiful portraits of and for you and then we can bring the family in for some lovely family photos too.
+\n\nSenior Photography: YOU BETCHA! We love, love, LOVE shooting senior sessions! We can shoot in studio, on location or both! We'll highlight their loves and dreams and have a ball! This is a great opportunity to showcase their love of sports, dance, theatre, reading, chess you name it!\n"
+            android:textColor="@color/white"
+            android:textSize="23sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/basicminimal"
+            android:gravity="start"
+            android:text="6. What is your cancellation policy?\n\n
+Once your photo shoot has been scheduled with our calendar, cancellations are accepted up to 7 days prior to your appointment. Cancellations made within the 7 day window do require a $350 rescheduling fee.
+\n\nWhy? you might ask? Because once your appointment is confirmed with our calendar, we do not accept any other business during that time-frame and are required to pay our stylists for the time they block off as well. Of course, we understand that emergencies do come up, and in some instances we may choose to waive that fee however we find that having this policy in place detracts from last minute cancellations.\n"
+            android:textColor="@color/white"
+            android:textSize="23sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/basicminimal"
+            android:gravity="start"
+            android:text="7. How do I reserve you for a photo shooting?
+        \n\nAs soon as we have decided on a date and time for your event you can pay the required deposit and you will be officqially booked.\n"
+            android:textColor="@color/white"
+            android:textSize="23sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/basicminimal"
+            android:gravity="start"
+            android:text="8. How high is the deposit? When is the remainder due?
+\n\nFor weddings the deposit to confirm your booking is 30 percent of the full package price (for bookings over 12 month in advance 50 percent). The remainder is due four weeks before the wedding takes place.\nFor portrait session the session fee / deposit is due at the time of your booking. The remainder is due one week before we meet. This way we can don’t have to think about the remainder anymore and can fully concentrate on the session.\n"
+            android:textColor="@color/white"
+            android:textSize="23sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/basicminimal"
+            android:gravity="start"
+            android:text="9. Do you charge for travel?\n\n
+We want to keep it simple for you, so for most sessions there are no travel fees. In most cases for wedding packages travel costs are included, for smaller session we normally charge travel fee if our travel time exceeds 70 miles (one way). We will make sure that in case there would be costs due to travelling, that we point it out right away so you consider it in your budgeting.\n"
+            android:textColor="@color/white"
+            android:textSize="23sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/basicminimal"
+            android:gravity="start"
+            android:text="10. Do you travel to meet clients?\n\nIf possible we try to arrange in person meetings (especially for weddings) within reasonable limits. If it shouldn’t be possible due to scheduling or distance we love to video chat with you."
+            android:textColor="@color/white"
+            android:textSize="23sp" />
+
+    </LinearLayout>
+
+</ScrollView>

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
@@ -32,8 +33,9 @@ public class DisplayCategoryImagesActivity extends AppCompatActivity {
     private RecyclerView mDisplayCategoryRecyclerView;
     private List<String> mDownloadLinkList = new ArrayList<>();
     private TextView mCategoryTextView;
-    private ImageView mBackButtonImageView;
+    private ImageView mBackButtonImageView, mInfoButtonImageView;
     private String mCategory_name;
+    private AlertDialog mAlertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class DisplayCategoryImagesActivity extends AppCompatActivity {
 
         mCategoryTextView = findViewById(R.id.categoryview);
         mBackButtonImageView = findViewById(R.id.back_button);
+        mInfoButtonImageView = findViewById(R.id.info_imageview);
 
         mCategoryTextView.setText(mCategory_name + "'s album");
         mDisplayCategoryRecyclerView = findViewById(R.id.displayCategories_recyclerView);
@@ -56,16 +59,28 @@ public class DisplayCategoryImagesActivity extends AppCompatActivity {
         SnapHelper helper = new LinearSnapHelper();
         helper.attachToRecyclerView(mDisplayCategoryRecyclerView);
 
-        mBackButtonImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
+        mBackButtonImageView.setOnClickListener(v -> onBackPressed());
+
+        mInfoButtonImageView.setOnClickListener(v -> {
+            openBookingDialog();
         });
 
         loadCategory();
 
     }
+
+    private void openBookingDialog() {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+
+        View mView = getLayoutInflater().inflate(R.layout.dailog_packages, null);
+
+
+        mBuilder.setView(mView);
+        mAlertDialog = mBuilder.create();
+        //mAlertDialog.setCanceledOnTouchOutside(false);
+        mAlertDialog.show();
+    }
+
 
     private void loadCategory() {
 

@@ -46,7 +46,8 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.afollestad.material-dialogs:core:2.4.0'
-    implementation 'com.github.HendrixString:Android-PdfMyXml:v1.0.1' // the latest version is "v1.0.1"
+    implementation 'com.github.HendrixString:Android-PdfMyXml:v1.0.1'
+    // the latest version is "v1.0.1"
     implementation project(":photoeditor")
     //implementation 'ja.burhanrashid52:photoeditor:0.3.3'
     implementation 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:1.0.0'

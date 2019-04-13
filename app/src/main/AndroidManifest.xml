@@ -14,6 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".basic.ContactUs"></activity>
+        <activity android:name=".basic.FAQ" />
         <activity android:name=".main.admin.AdminAppointmentActivity" />
         <activity android:name=".main.user.UserAppointmentActivity" />
         <activity android:name=".main.user.UserHomeActivity" />
@@ -24,16 +26,13 @@
         <activity android:name=".basic.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.user.ImageBookActivity">
-
-        </activity>
+        <activity android:name=".main.user.ImageBookActivity" />
         <activity android:name=".ImageBookPaymentActivity" />
-        <activity android:name=".ImageBookThemeActivity">
-
-        </activity>
+        <activity android:name=".ImageBookThemeActivity" />
 
         <provider
             android:name=".GenericFileProvider"
@@ -42,7 +41,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/paths"/>
+                android:resource="@xml/paths" />
         </provider>
     </application>
 

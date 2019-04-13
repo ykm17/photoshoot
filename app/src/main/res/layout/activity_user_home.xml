@@ -72,6 +72,28 @@
             android:textSize="15sp" />
 
         <Button
+            android:id="@+id/contactus_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/new_button"
+            android:text="Contact Us"
+            android:textAllCaps="false"
+            android:textColor="@drawable/new_text_color"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/faq_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/new_button"
+            android:text="FAQs"
+            android:textAllCaps="false"
+            android:textColor="@drawable/new_text_color"
+            android:textSize="15sp" />
+
+        <Button
             android:id="@+id/logout_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

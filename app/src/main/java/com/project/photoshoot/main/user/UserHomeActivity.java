@@ -19,6 +19,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.project.photoshoot.ImageBookThemeActivity;
 import com.project.photoshoot.R;
 import com.project.photoshoot.adapters.DisplayCategoryAdapter;
+import com.project.photoshoot.basic.ContactUs;
+import com.project.photoshoot.basic.FAQ;
 import com.project.photoshoot.basic.LoginActivity;
 import com.project.photoshoot.models.ImageFile;
 
@@ -33,7 +35,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class UserHomeActivity extends AppCompatActivity {
 
     private static final String TAG = UserHomeActivity.class.getSimpleName();
-    private Button mLogoutButton, mAppointmentButton, mPhotoBookButton;
+    private Button mLogoutButton, mAppointmentButton, mPhotoBookButton, mContactUsButton, mFAQButton;
     private ImageView mMenuButton;
     private RecyclerView mDisplayCategoryRecyclerView;
     private ProgressBar mProgressBar;
@@ -57,6 +59,9 @@ public class UserHomeActivity extends AppCompatActivity {
 
         mAppointmentButton = findViewById(R.id.appoinment_button);
         mLogoutButton = findViewById(R.id.logout_button);
+
+        mContactUsButton = findViewById(R.id.contactus_button);
+        mFAQButton = findViewById(R.id.faq_button);
 
         mMenuButton = findViewById(R.id.menu_button);
         mPhotoBookButton = findViewById(R.id.photobook_button);
@@ -107,6 +112,20 @@ public class UserHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(UserHomeActivity.this, UserAppointmentActivity.class));
+            }
+        });
+
+        mContactUsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserHomeActivity.this, ContactUs.class));
+            }
+        });
+
+        mFAQButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserHomeActivity.this, FAQ.class));
             }
         });
 
